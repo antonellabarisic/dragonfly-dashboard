@@ -13,7 +13,7 @@ import com.google.auto.value.AutoValue;
 public abstract class DDSAWaypointsRequest {
     @JsonProperty
     public abstract double radius();
-    @JsonProperty
+    @JsonProperty("step_length")
     public abstract double stepLength();
     @JsonProperty
     public abstract int walk();
@@ -23,7 +23,7 @@ public abstract class DDSAWaypointsRequest {
     public abstract int loops();
     @JsonProperty
     public abstract double altitude();
-    @JsonProperty
+    @JsonProperty("wait_time")
     public abstract double waitTime();
 
     public static Builder builder() {
@@ -34,11 +34,13 @@ public abstract class DDSAWaypointsRequest {
     @JsonPOJOBuilder(withPrefix = "")
     public abstract static class Builder {
         public abstract Builder radius(double radius);
+        @JsonProperty("step_length")
         public abstract Builder stepLength(double stepLength);
         public abstract Builder walk(int walk);
         public abstract Builder stacks(int stacks);
         public abstract Builder loops(int loops);
         public abstract Builder altitude(double altitude);
+        @JsonProperty("wait_time")
         public abstract Builder waitTime(double waitTime);
         public abstract DDSAWaypointsRequest build();
     }

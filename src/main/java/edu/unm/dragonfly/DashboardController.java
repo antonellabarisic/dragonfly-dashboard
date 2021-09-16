@@ -63,7 +63,6 @@ import javafx.stage.Stage;
 import ros.RosBridge;
 import ros.SubscriptionRequestMsg;
 import ros.msgs.std_msgs.PrimitiveMsg;
-import ros.msgs.std_msgs.Time;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -642,8 +641,7 @@ public class DashboardController {
 
         for(int i = 0; i < droneList.size(); i++) {
             Drone drone = droneList.get(i);
-            drone.setup(SetupRequest.create(Time.now(),
-                    maxAltitudeInteger,
+            drone.setup(SetupRequest.create(maxAltitudeInteger,
                     1000 + (i * rtlFactor * 100),
                     boundary));
         }

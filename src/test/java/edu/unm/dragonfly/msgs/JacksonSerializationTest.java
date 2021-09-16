@@ -22,7 +22,7 @@ public class JacksonSerializationTest {
     @Test
     public void testMarshalling() throws IOException {
         testMarshalling(DDSARequest.class, DDSARequest.builder()
-                .commandTime(Time.create(9, 10))
+//                .commandTime(Time.create(9, 10))
                 .altitude(1)
                 .distanceThreshold(2)
                 .loops(3)
@@ -48,7 +48,7 @@ public class JacksonSerializationTest {
         testMarshalling(LatLon.class, LatLon.builder().latitude(4).longitude(5).relativeAltitude(6).build());
 
         testMarshalling(LawnmowerRequest.class, LawnmowerRequest.builder()
-                .commandTime(Time.create(9, 10))
+//                .commandTime(Time.create(9, 10))
                 .altitude(1)
                 .boundary(TEST_LAT_LON_LIST)
                 .distanceThreshold(3)
@@ -74,7 +74,7 @@ public class JacksonSerializationTest {
         testMarshalling(MavrosState.class, MavrosState.create(TEST_HEADER, true, false, true, false, "mode", MavrosState.SystemStatus.MAV_STATE_CALIBRATING));
 
         testMarshalling(NavigationRequest.class, NavigationRequest.builder()
-                .commandTime(Time.create(9, 10))
+//                .commandTime(Time.create(9, 10))
                 .distanceThreshold(1)
                 .waitTime(2)
                 .waypoints(TEST_LAT_LON_LIST)

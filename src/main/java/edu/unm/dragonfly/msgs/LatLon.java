@@ -16,7 +16,7 @@ public abstract class LatLon {
     public abstract double latitude();
     @JsonProperty
     public abstract double longitude();
-    @JsonProperty
+    @JsonProperty("relative_altitude")
     public abstract double relativeAltitude();
 
     public static Builder builder() {
@@ -28,6 +28,7 @@ public abstract class LatLon {
     public abstract static class Builder {
         public abstract Builder latitude(double latitude);
         public abstract Builder longitude(double longitude);
+        @JsonProperty("relative_altitude")
         public abstract Builder relativeAltitude(double relativeAltitude);
         public abstract LatLon build();
     }

@@ -1,4 +1,4 @@
-FROM ros:melodic
+FROM ros:foxy
 
 ENV NVIDIA_VISIBLE_DEVICES \
     ${NVIDIA_VISIBLE_DEVICES:-all}
@@ -11,7 +11,7 @@ ENV WORKSPACE=/workspace
 # Install dependencies
 RUN apt-get -qq update && \
     apt-get -qq upgrade && \
-    apt-get -qq install apt-utils build-essential vim python-catkin-tools software-properties-common
+    apt-get -qq install apt-utils build-essential vim software-properties-common
 
 # Install Java
 RUN add-apt-repository ppa:linuxuprising/java && apt-get -qq update && \
@@ -20,12 +20,12 @@ RUN add-apt-repository ppa:linuxuprising/java && apt-get -qq update && \
 RUN mkdir -p /var/cache/oracle-jdk11-installer-local/
 COPY docker/jdk-11.0.*_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
 
-RUN apt-get -qq install ros-melodic-mavros ros-melodic-mavros-extras oracle-java11-installer-local openjfx unzip
+RUN apt-get -qq install ros-foxy-mavros oracle-java11-installer-local openjfx unzip
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # Install ROS Bridge
-RUN apt-get -qq install ros-melodic-rosbridge-server
+RUN apt-get -qq install ros-foxy-rosbridge-server
 
 # Clear apt cache to save on space
 RUN rm -rf /var/lib/apt/lists/*
@@ -61,12 +61,11 @@ ADD gradle/wrapper/* $WORKSPACE/gradle/wrapper/
 RUN cd $WORKSPACE && ./gradlew clean
 
 COPY . $WORKSPACE
+
 # Install dragonfly infrastructure
-RUN source /opt/ros/melodic/setup.bash && \
+RUN source /opt/ros/foxy/setup.bash && \
 	cd $WORKSPACE/dragonfly && \
-	rm -rf src/dragonfly_dashboard src/dragonfly_messages_java build devel && \
-	catkin_make && \
-	catkin_make install
+	colcon build
 
 # Install dragonfly desktop
 
