@@ -73,6 +73,7 @@ RUN cd $WORKSPACE && \
 	./gradlew build --parallel
 
 # Setup Entrypoint
+COPY ./docker/start_rosbridge.sh /
 COPY ./docker/entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
