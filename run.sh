@@ -23,4 +23,4 @@ docker run -it \
     --network ros-net \
     --mount type=bind,source="$(pwd)"/missions,target=/workspace/missions \
     dragonfly-dashboard:latest \
-    /bin/sh -c 'export ROS_MASTER_URI=http://10.0.0.3:11311; ./start_rosbridge.sh; cd /workspace; ./gradlew run'
+    /bin/sh -c 'export ROS_MASTER_URI=http://192.168.50.205:11311; ./start_rosbridge.sh; cd /workspace; ./gradlew run'
