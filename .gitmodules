@@ -1,6 +1,6 @@
-[submodule "dragonfly"]
+[submodule "dragonfly-controller"]
 	path = dragonfly
-	url = git@github.com:johncarl81/dragonfly.git
+	url = https://github.com/antonellabarisic/dragonfly-controller.git
 [submodule "java_rosbridge"]
 	path = java_rosbridge
-	url = git@github.com:johncarl81/java_rosbridge.git
+	url = https://github.com/johncarl81/java_rosbridge.git
