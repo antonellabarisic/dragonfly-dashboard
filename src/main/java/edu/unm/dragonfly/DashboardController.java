@@ -149,6 +149,8 @@ public class DashboardController {
     @FXML
     private Button centerFixture;
     @FXML
+    private Button confirmDetection;
+    @FXML
     private Button missionAdd;
     @FXML
     private Button missionLoad;
@@ -313,6 +315,7 @@ public class DashboardController {
         cancel.setDisable(true);
         deleteFixture.setDisable(true);
         centerFixture.setDisable(true);
+        confirmDetection.setDisable(true);
 
         add.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -484,6 +487,7 @@ public class DashboardController {
                 ddsa.setDisable(!selected);
                 random.setDisable(!(selected && !boundaries.isEmpty()));
                 cancel.setDisable(!selected);
+                confirmDetection.setDisable(!selected);
             }
         });
 
@@ -515,6 +519,13 @@ public class DashboardController {
             }
         });
 
+        confirmDetection.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Drone selected = drones.getSelectionModel().getSelectedItem();
+                selected.confirmDetection();
+            }    
+        });
 
         PublishSubject<String> nameSubject = PublishSubject.create();
         bridge.subscribe(SubscriptionRequestMsg.generate("/dragonfly/announce")

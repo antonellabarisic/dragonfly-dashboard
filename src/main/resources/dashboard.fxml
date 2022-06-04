@@ -57,6 +57,13 @@
                         </FlowPane>
                     </VBox>
                 </TitledPane>
+                <TitledPane text="OperatorActions">
+                    <VBox prefWidth="300.0">
+                        <FlowPane hgap="2">
+                            <Button fx:id="confirmDetection" text="Confirm Detection" />
+                        </FlowPane>
+                    </VBox>
+                </TitledPane>
             </VBox>
         </left>
         <right>

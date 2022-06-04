@@ -231,6 +231,14 @@ public class Drone {
                 (data, stringRep) -> System.out.println("Setup sent to " + name));
     }
 
+    public void confirmDetection()
+    {
+        bridge.call(
+            "/" + name + "/pursuer/confirm", "std_srvs/Empty", null, 
+            (data, stringRep) -> System.out.println("Confirm detection sent to " + name)
+        );
+    }
+
     public static class LatLonRelativeAltitude {
         private final double latitude;
         private final double longitude;
