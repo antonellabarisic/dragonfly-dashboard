@@ -16,7 +16,7 @@ java{
 
 javafx {
     version = "12"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.swing' ]
 }
 
 compileJava.options.encoding = 'UTF-8'

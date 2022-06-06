@@ -7,10 +7,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.unm.dragonfly.DashboardController">
     <StackPane fx:id="mapPlaceholder"/>
@@ -59,6 +61,10 @@
                 </TitledPane>
                 <TitledPane text="OperatorActions">
                     <VBox prefWidth="300.0">
+                        <HBox minHeight="200" maxHeight="200">
+                            <ImageView fx:id="imageContainer" preserveRatio="true"/>
+                        </HBox>
+                        <Separator fx:id="separator"/>
                         <FlowPane hgap="2">
                             <Button fx:id="confirmDetection" text="Confirm Detection" />
                         </FlowPane>

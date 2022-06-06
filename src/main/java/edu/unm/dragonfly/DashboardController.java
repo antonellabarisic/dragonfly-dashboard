@@ -33,6 +33,7 @@ import edu.unm.dragonfly.mission.Waypoint;
 import edu.unm.dragonfly.mission.step.MissionStart;
 import edu.unm.dragonfly.mission.step.MissionStep;
 import edu.unm.dragonfly.msgs.Boundary;
+import ros.msgs.sensor_msgs.Image;
 import edu.unm.dragonfly.msgs.SetupRequest;
 import edu.unm.dragonfly.tsp.TSP;
 import io.reactivex.Observable;
@@ -40,6 +41,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -49,6 +51,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.image.ImageView;
+import javafx.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -87,6 +91,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.awt.image.BufferedImage;
+import javafx.embed.swing.SwingFXUtils;
 
 public class DashboardController {
 
@@ -151,6 +157,8 @@ public class DashboardController {
     @FXML
     private Button confirmDetection;
     @FXML
+    private ImageView imageContainer;
+    @FXML
     private Button missionAdd;
     @FXML
     private Button missionLoad;
@@ -172,6 +180,8 @@ public class DashboardController {
     @Nullable
     private String mapOverride;
 
+    // /dragonfly1/camera/color/image_raw/compressed
+    private final BehaviorSubject<Image> image = BehaviorSubject.create();
     private final ObservableList<Drone> droneList = FXCollections.observableArrayList();
     private final ObservableList<String> logList = FXCollections.observableArrayList();
     private final ObservableList<MissionStep> missionList = FXCollections.observableArrayList();
@@ -526,6 +536,14 @@ public class DashboardController {
                 selected.confirmDetection();
             }    
         });
+
+        image.subscribe(value -> {
+            BufferedImage buffered_image = value.toBufferedImage();
+            imageContainer.setImage(SwingFXUtils.toFXImage(buffered_image, null));
+        });
+
+        bridge.subscribe("/YOLODetection/bb_image", "sensor_msgs/Image",
+                new JsonRosListenerDelegate<>(Image.class, image::onNext));
 
         PublishSubject<String> nameSubject = PublishSubject.create();
         bridge.subscribe(SubscriptionRequestMsg.generate("/dragonfly/announce")
