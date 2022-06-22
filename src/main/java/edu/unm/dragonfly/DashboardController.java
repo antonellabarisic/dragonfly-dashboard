@@ -918,6 +918,7 @@ public class DashboardController {
                         private Graphic droneShadowGraphic;
                         private SimpleMarkerSceneSymbol symbol;
                         private Disposable updateColorDisposable;
+                        private int color;
 
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -927,8 +928,9 @@ public class DashboardController {
                         public void onNext(Drone.LatLonRelativeAltitude navSatFix) {
                             Point point = new Point(navSatFix.getLongitude(), navSatFix.getLatitude(), navSatFix.getRelativeAltitude());
                             if (droneGraphic == null) {
-                                symbol = new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbol.Style.CYLINDER, 0xFFFF0000, 1, 1, 1, SceneSymbol.AnchorPosition.CENTER);
-                                TextSymbol nameText = new TextSymbol(10, name, 0xFFFFFFFF, TextSymbol.HorizontalAlignment.LEFT, TextSymbol.VerticalAlignment.MIDDLE);
+                                color = getColor(name);
+                                symbol = new SimpleMarkerSceneSymbol(SimpleMarkerSceneSymbol.Style.CYLINDER, color, 1, 1, 1, SceneSymbol.AnchorPosition.CENTER);
+                                TextSymbol nameText = new TextSymbol(14, name, 0xFFFFFFFF, TextSymbol.HorizontalAlignment.LEFT, TextSymbol.VerticalAlignment.MIDDLE);
                                 nameText.setOffsetX(25);
                                 droneGraphic = new Graphic(point, new CompositeSymbol(Arrays.asList(symbol, nameText)));
                                 droneOverlay.getGraphics().add(droneGraphic);
@@ -938,7 +940,8 @@ public class DashboardController {
                             } else {
                                 droneGraphic.setGeometry(point);
                                 droneShadowGraphic.setGeometry(point);
-                                symbol.setColor(0xFFFF0000);
+                                color = getColor(name);
+                                symbol.setColor(color);
                             }
                             if(updateColorDisposable != null) {
                                 updateColorDisposable.dispose();
@@ -979,6 +982,21 @@ public class DashboardController {
             }
         }
         return false;
+    }
+
+    private int getColor(String name) {
+        if (name.equals("intruder")){
+            // orange
+            return 0xFFFFA500;
+        }
+        else if (name.equals("lidar_intruder")){
+            // red
+            return 0xFFFF0000;
+        }
+        else{
+            // green
+            return 0xFF008000;
+        }
     }
 
     private void log(String message) {
