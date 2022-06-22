@@ -61,12 +61,16 @@
                 </TitledPane>
                 <TitledPane text="OperatorActions">
                     <VBox prefWidth="300.0">
-                        <HBox minHeight="200" maxHeight="200">
+                        <HBox minHeight="150" maxHeight="150">
                             <ImageView fx:id="imageContainer" preserveRatio="true"/>
                         </HBox>
                         <Separator fx:id="separator"/>
                         <FlowPane hgap="2">
-                            <Button fx:id="confirmDetection" text="Confirm Detection" />
+                            <Button fx:id="confirmGroundDetection" text="Confirm Ground Detection" />
+                        </FlowPane>
+                        <Separator fx:id="separator"/>
+                        <FlowPane hgap="2">
+                            <Button fx:id="confirmDetection" text="Confirm Aerial Detection" />
                         </FlowPane>
                     </VBox>
                 </TitledPane>

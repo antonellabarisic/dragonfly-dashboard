@@ -157,6 +157,8 @@ public class DashboardController {
     @FXML
     private Button confirmDetection;
     @FXML
+    private Button confirmGroundDetection;
+    @FXML
     private ImageView imageContainer;
     @FXML
     private Button missionAdd;
@@ -326,6 +328,7 @@ public class DashboardController {
         deleteFixture.setDisable(true);
         centerFixture.setDisable(true);
         confirmDetection.setDisable(true);
+        confirmGroundDetection.setDisable(true);
 
         add.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -498,6 +501,7 @@ public class DashboardController {
                 random.setDisable(!(selected && !boundaries.isEmpty()));
                 cancel.setDisable(!selected);
                 confirmDetection.setDisable(!selected);
+                confirmGroundDetection.setDisable(!selected);
             }
         });
 
@@ -535,6 +539,14 @@ public class DashboardController {
                 Drone selected = drones.getSelectionModel().getSelectedItem();
                 selected.confirmDetection();
             }    
+        });
+
+        confirmGroundDetection.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Drone selected = drones.getSelectionModel().getSelectedItem();
+                selected.confirmGroundDetection();
+            }
         });
 
         image.subscribe(value -> {

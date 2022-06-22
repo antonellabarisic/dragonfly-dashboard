@@ -235,7 +235,15 @@ public class Drone {
     {
         bridge.call(
             "/" + name + "/pursuer/confirm", "std_srvs/Empty", null, 
-            (data, stringRep) -> System.out.println("Confirm detection sent to " + name)
+            (data, stringRep) -> System.out.println("Confirm aerial detection to " + name)
+        );
+    }
+
+    public void confirmGroundDetection()
+    {
+        bridge.call(
+            "/" + name + "/pursuer/confirm_ground", "std_srvs/Empty", null,
+             (data, stringRep) -> System.out.println("Confirm ground detection to " + name)
         );
     }
 
