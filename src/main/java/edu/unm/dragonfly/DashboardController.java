@@ -92,6 +92,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.awt.image.BufferedImage;
+import java.awt.image.AffineTransformOp;
+import java.awt.geom.AffineTransform;
 import javafx.embed.swing.SwingFXUtils;
 
 public class DashboardController {
@@ -551,7 +553,17 @@ public class DashboardController {
 
         image.subscribe(value -> {
             BufferedImage buffered_image = value.toBufferedImage();
-            imageContainer.setImage(SwingFXUtils.toFXImage(buffered_image, null));
+
+            float scale_factor = (float) 290.0 / buffered_image.getWidth();
+            int w = (int) (buffered_image.getWidth() * scale_factor);
+            int h = (int) (buffered_image.getHeight() * scale_factor);
+            BufferedImage processed_image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+            AffineTransform at = AffineTransform.getScaleInstance(scale_factor, scale_factor);
+            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            processed_image = scaleOp.filter(buffered_image, processed_image);
+
+            imageContainer.setImage(SwingFXUtils.toFXImage(processed_image, null));
         });
 
         bridge.subscribe("/YOLODetection/bb_image", "sensor_msgs/Image",
@@ -992,6 +1004,10 @@ public class DashboardController {
         else if (name.equals("lidar_intruder")){
             // red
             return 0xFFFF0000;
+        }
+        else if (name.equals("pioneer1")){
+            // blue
+            return 0xFF0000FF;
         }
         else{
             // green
